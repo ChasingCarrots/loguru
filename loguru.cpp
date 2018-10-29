@@ -112,9 +112,13 @@
 #if LOGURU_WINTHREADS
 	#ifndef _WIN32_WINNT
 		#define _WIN32_WINNT 0x0502
+    #endif
+	#ifndef WIN32_LEAN_AND_MEAN
+		#define WIN32_LEAN_AND_MEAN
 	#endif
-	#define WIN32_LEAN_AND_MEAN
-	#define NOMINMAX
+	#ifndef NOMINMAX
+		#define NOMINMAX
+	#endif
 	#include <windows.h>
 #endif
 
@@ -892,7 +896,7 @@ namespace loguru
 #if LOGURU_WINTHREADS
 	char* get_thread_name_win32()
 	{
-		__declspec( thread ) static char thread_name[LOGURU_THREADNAME_WIDTH + 1] = {0};
+		thread_local static char thread_name[LOGURU_THREADNAME_WIDTH + 1] = {0};
 		return &thread_name[0];
 	}
 #endif // LOGURU_WINTHREADS
@@ -1663,7 +1667,7 @@ namespace loguru {
 		#if defined(_MSC_VER)
 		#pragma message ( "No signal handlers on Win32" )
 		#else
-		#warning "No signal handlers on Win32"
+//		#warning "No signal handlers on Win32"
 		#endif
 	}
 } // namespace loguru
