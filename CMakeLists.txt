@@ -11,3 +11,6 @@ if(USE_FMTLIB)
     target_link_libraries(loguru PUBLIC fmt)
 endif()
 
+install(TARGETS loguru
+        RUNTIME DESTINATION bin
+        ARCHIVE DESTINATION lib)
